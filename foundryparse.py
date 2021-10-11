@@ -6,8 +6,8 @@ import re
 from collections import defaultdict
 
 out = open('output.csv','w') 
-sys.stdout = open('output.txt','w')
-out = csv.writer(out, delimiter=',',quotechar='"', quoting=csv.QUOTE_MINIMAL)
+#sys.stdout = open('output.txt','w')
+writer = csv.writer(out)
 a = f.read()
 b = a.split('---------------------------')
 #print(len(b))
@@ -55,8 +55,8 @@ Abilities = ['Acrobatics',"Animal Handling",'Arcana','Athletics','Deception','Hi
 PCList = ["Zoz","Tilikuss","Mikael","Malus","Alchemical"] 
 BadBoyList = ['Jack','Josh','Will','Zev','Gamemaster']
 XD = ['Average Attack Roll','Initiative','Strength Save','Dexterity Save','Constitution Save','Intelligence Save','Wisdom Save','Charisma Save']
-
-BIGLIST = Abilities + XD
+Saves = ['Strength Save','Dexterity Save','Constitution Save','Intelligence Save','Wisdom Save','Charisma Save'] 
+BIGLIST = XD + Abilities
 #print(b[0])
 
 #print(type(b[100]))
@@ -188,10 +188,67 @@ def printoutuput(data):
         print(RollData.get(i))
         print('\n')
 def prepareforcsv(data):
+    g = open("prep.txt","a")
+
     for i in RollData.keys():
         for x in RollData.get(i).keys():
             if int(RollData.get(i).get(x)[0]) != 0:
                 print(i + " " + x + " " +  str(float(RollData.get(i).get(x)[1]/float(RollData.get(i).get(x)[0]))) + "\t\t\t" + str(RollData.get(i).get(x)[1]) +" Out Of " + str(RollData.get(i).get(x)[0])+ " Rolls ")
+                g.write(i + " " + x + " " +  str(float(RollData.get(i).get(x)[1]/float(RollData.get(i).get(x)[0]))) + "\t\t\t" + str(RollData.get(i).get(x)[1]) +" Out Of " + str(RollData.get(i).get(x)[0])+ " Rolls \n")
+            else:
+                g.write(i + " " + x  + " 0" + "\t\t\t" + str(RollData.get(i).get(x)[1]) +" Out Of " + str(RollData.get(i).get(x)[0])+ " Rolls \n")
+                print(i + " " + x  + " 0" + "\t\t\t" + str(RollData.get(i).get(x)[1]) +" Out Of " + str(RollData.get(i).get(x)[0])+ " Rolls ")
+def findchampion(data):
+    sums = 0
+    occurences = 0
+    print("Average Roll Winners!")
+    for x in PCList:
+        if int(RollData.get(x).get('Average Attack Roll')[0]) != 0:
+            print(x + " " + "Average Attack Roll" + " " +  str(float(RollData.get(x).get('Average Attack Roll')[1]/float(RollData.get(x).get('Average Attack Roll')[0]))) + "\t\t\t" + str(RollData.get(x).get('Average Attack Roll')[1]) +" Out Of " + str(RollData.get(x).get('Average Attack Roll')[0])+ " Rolls ")
+    sums = 0
+    occurences = 0
+    for x in RollData.keys():
+        if x not in PCList:
+            occurences+=float(RollData.get(x).get('Average Attack Roll')[0])
+            sums +=  float(RollData.get(x).get('Average Attack Roll')[1])
+    print("Monsters Attack Average " + str(float(sums/occurences)) + "\t\t\t" + str(int(sums)) +" Out Of " +  str(int(occurences)) + " Rolls ")
+    print()
+    print("Skill Check Awards")
+    for i in PCList:
+        sums = 0
+        occurences = 0
+        for x in Abilities:
+            if int(RollData.get(i).get(x)[0]) != 0:
+                occurences+=float(RollData.get(i).get(x)[0])
+                sums +=  float(RollData.get(i).get(x)[1])
+        print(i + " Skill Check Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
+    print()
+    print("Saving Throw Awards")
+    for i in PCList:
+        sums = 0
+        occurences = 0
+        for x in Saves:
+            if int(RollData.get(i).get(x)[0]) != 0:
+                occurences+=float(RollData.get(i).get(x)[0])
+                sums +=  float(RollData.get(i).get(x)[1])
+        print(i + " Average Saving Throw " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
+    print()
+    print("Initiative Awards")
+    sums = 0
+    occurences = 0
+    for x in PCList:
+        if int(RollData.get(x).get('Initiative')[0]) != 0:
+            print(x + " " + "Initiative" + " " +  str(float(RollData.get(x).get('Initiative')[1]/float(RollData.get(x).get('Initiative')[0]))) + "\t\t\t" + str(RollData.get(x).get('Initiative')[1]) +" Out Of " + str(RollData.get(x).get('Initiative')[0])+ " Rolls ")
+    sums = 0
+    occurences = 0
+    for i in RollData.keys():
+        if i not in PCList:
+            if int(RollData.get(i).get('Initiative')[0]) != 0:
+                occurences+=float(RollData.get(i).get('Initiative')[0])
+                sums +=  float(RollData.get(i).get('Initiative')[1])
+    print("Monsters " + " Initiative " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))             
+
+
 if __name__ == '__main__':
     for i in range(0,len(b)):
         #if 'Save' in b[i]:
@@ -206,11 +263,17 @@ if __name__ == '__main__':
         #print(i)
         #print(b[i])
         determineRollType(b[i])
+    findchampion(RollData)
+    #printoutuput(RollData)
+    #b = prepareforcsv(RollData)
+    writer.writerow(['Name'])
+    for i in BIGLIST:
+        writer.writerows(i)
     
-    printoutuput(RollData)
-    prepareforcsv(RollData)
     #print(len(b[1325].split()))
     #print(RollData)
+    #print(list(b))
+    #print(len(b))
     sys.stdout.close()    
     
 
