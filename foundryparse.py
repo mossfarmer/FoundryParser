@@ -1,4 +1,4 @@
-f = open("foundrylog3.txt","r")
+f = open("finalfinal.txt","r")
 import  csv
 import itertools
 import sys
@@ -47,7 +47,7 @@ totalrolls = len(b)
 # 2 Attacks
 # 3 Saving Throws 
 # 4 Spells with stats
-
+monsterList = []
 RollData = {
        
 }
@@ -116,16 +116,16 @@ def handleAttackRoll(roll):
         ind = [i for i,n in enumerate(d) if n == '1d20'][1] #second occurence of 1 d20 
         attackroll = d[ind+1]
         if name in PCList:
-            RollData.get(name).get('Average Attack Roll')[0]+=1
-            RollData.get(name).get('Average Attack Roll')[1]+=int(attackroll)
             if weapon not in RollData.get(name).keys():
                 RollData.get(name).update({weapon :[1,int(attackroll)]})
                 weaponList.append(weapon)
+                RollData.get(name).get('Average Attack Roll')[0]+=1
+                RollData.get(name).get('Average Attack Roll')[1]+=int(attackroll)
             else:
                 RollData.get(name).get(weapon)[0]+=1
                 RollData.get(name).get(weapon)[1]+=int(attackroll)
                 RollData.get(name).get('Average Attack Roll')[0]+=1
-                RollData.get(name).get('Average Attack Roll')[1]+=1
+                RollData.get(name).get('Average Attack Roll')[1]+=int(attackroll)
 
         else:
             RollData.get(name).get('Average Attack Roll')[0]+=1
@@ -156,6 +156,7 @@ def determineRollType(roll):
         RollData.update({d[3]: { 'Initiative' : [0,0],'Average Attack Roll': [0,0],'Strength Save':[0,0],'Dexterity Save':[0,0],'Constitution Save':[0,0],'Intelligence Save':[0,0],'Wisdom Save':[0,0],'Charisma Save':[0,0],'Acrobatics':[0,0],'Animal Handling':[0,0],'Arcana':[0,0],'Athletics':[0,0],'Deception':[0,0],'History':[0,0],'Insight':[0,0],'Intimidation':[0,0],'Investigation':[0,0],'Medicine':[0,0],'Nature':[0,0],'Perception':[0,0],'Performance':[0,0],'Persuasion':[0,0],'Religion':[0,0],'Sleight of Hand':[0,0],'Stealth':[0,0] } })  
     if d[3] not in PCList and d[3] not in RollData:
         RollData.update({d[3]: { 'Initiative' : [0,0],'Average Attack Roll':[0,0],'Saving Throws':[0,0],'Skills':[0,0]}})
+        monsterList.append(d[3])
     if d[5] in Abilities:
         #print("IN Abilities")
         handleAbilityCheck(d)
@@ -212,14 +213,19 @@ def findchampion(data):
         sums = 0
         occurences = 0
         for x in RollData.get(i).keys():
-            if int(RollData.get(i).get(x)[0]) != 0 and x not in weaponList:
+            if int(RollData.get(i).get(x)[0]) != 0 and x not in weaponList: 
                 occurences+=float(RollData.get(i).get(x)[0])
                 sums +=  float(RollData.get(i).get(x)[1])
         print(i + " Total Roll Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
+    sums = 0
+    occurences = 0
+    for i in monsterList:
+        for x in RollData.get(i).keys():
+            if int(RollData.get(i).get(x)[0]) != 0:
+                occurences+=float(RollData.get(i).get(x)[0])
+                sums +=  float(RollData.get(i).get(x)[1])
+    print("Monsters" + " Total Roll Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
     print()
-
-
-
     print("Average Attack Roll Winners!")
     for x in PCList:
         if int(RollData.get(x).get('Average Attack Roll')[0]) != 0:
@@ -292,7 +298,7 @@ def findchampion(data):
         for x in RollData.get(i).keys():
             if x in weaponList:
                 print(i + " using " + x + " " +  str(float(RollData.get(i).get(x)[1]/float(RollData.get(i).get(x)[0]))) + "\t\t\t" + str(RollData.get(i).get(x)[1]) +" Out Of " + str(RollData.get(i).get(x)[0])+ " Rolls ")
-
+        print()
 if __name__ == '__main__':
     #print(b[1599])
     for i in range(0,len(b)):
@@ -316,9 +322,11 @@ if __name__ == '__main__':
     #print(RollData.keys())
     writer.writerow(['Name'])
     for i in BIGLIST:
-        writer.writerows(i)
+
+        writer.writerow(i)
     
     #print(len(b[1325].split()))
+    #print(monsterList)
     #print(RollData)
     #print(list(b))
     #print(len(b))
