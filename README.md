@@ -3,7 +3,7 @@
 ![Chat Logs](assets/Save1.png)
 ## When running with Python
 ![Usage](assets/Example1.png) <br/>
-## Text will be outputted in a file called results.txt
+### Text will be outputted in a file called results.txt
 
 ## :star: Objectives
 1. Parsing [FoundryVTT](https://foundryvtt.com/) chat logs to gather stats about player rolls
