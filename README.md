@@ -1,8 +1,8 @@
 # FoundryParser
-### Where to get the input text file from [FoundryVTT](https://foundryvtt.com/) <br/>
+## Where to get the input text file from [FoundryVTT](https://foundryvtt.com/) <br/>
 ![Chat Logs](assets/Save1.png)
 ---
-### When running with Python
+## When running with Python
 ![Usage](assets/Example1.png)
 Text will be outputted in a file called results.txt
 ---
