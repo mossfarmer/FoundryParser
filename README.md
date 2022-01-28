@@ -5,6 +5,7 @@ Where to get the input text file from [FoundryVTT](https://foundryvtt.com/) <br/
 When running with python3
 ![Usage](assets/Example1.png)
 <br/>
+Text will be outputted in a file called results.txt
 ### :star: Objectives
 1. Parsing [FoundryVTT](https://foundryvtt.com/) chat logs to gather stats about player rolls
 2. Calculating stats for only the natural rolls
