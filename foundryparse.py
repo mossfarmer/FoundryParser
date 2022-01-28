@@ -2,7 +2,7 @@
 #Message Shubbs#1192 on discord to give me bug reports please, or just make fun of my coding 
 #MAKE SURE YOU ARE USING BETTER ROLLS 5E
 
-f = open("finalfinal.txt","r")
+
 import  csv
 import itertools
 import sys
@@ -12,10 +12,7 @@ from collections import defaultdict
 out = open('output.csv','w') 
 #sys.stdout = open('output.txt','w')
 writer = csv.writer(out)
-a = f.read()
-b = a.split('---------------------------')
-#print(len(b))
-totalrolls = len(b)
+
 # PC Entry Orders
 # 1 Initiative
 # 2 General Attack Rolls
@@ -305,9 +302,14 @@ def findchampion(data):
         print()
 if __name__ == '__main__':
     #print(b[1599])
-
-    CharacterList = input("Enter Character first names seperated by commas \n Example George,Bob,.. \n")
-    PlayerList= input("Enter Foundry Player Names seperated by commas\n This is used to filter bad inputs \n")
+    inputfile = input("Enter Foundry Text File \nEx Output.txt \n")
+    f = open(inputfile,"r")
+    a = f.read()
+    b = a.split('---------------------------')
+    #print(len(b))
+    totalrolls = len(b)
+    CharacterList = input("Enter Character first names seperated by commas \nExample George,Bob,.. \n")
+    PlayerList= input("Enter Foundry Player Names seperated by commas\nThis is used to filter bad inputs \n")
     PlayerList = PlayerList+',Gamemaster'
     CharacterList = CharacterList.split(sep = ',')
     PlayerList = PlayerList.split(sep = ',')
@@ -336,7 +338,7 @@ if __name__ == '__main__':
         determineRollType(b[i])
     findchampion(RollData)
 
-    #printoutuput(RollData)
+    printoutuput(RollData)
     #b = prepareforcsv(RollData)
     #print(RollData.keys())
     #writer.writerow(['Name'])
