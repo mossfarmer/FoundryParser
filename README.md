@@ -1,5 +1,5 @@
 # FoundryParser
-
+![Chat Logs](assets/Save1.png)
 ![Usage](assets/Example1.png)
 
 Parsing [FoundryVTT](https://foundryvtt.com/) chat logs to gather stats about player rolls
