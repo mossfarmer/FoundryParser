@@ -1,5 +1,8 @@
 # FoundryParser
+Where to get the input text file from
 ![Chat Logs](assets/Save1.png)
+
+When running with python3
 ![Usage](assets/Example1.png)
 
 Parsing [FoundryVTT](https://foundryvtt.com/) chat logs to gather stats about player rolls
