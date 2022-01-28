@@ -1,10 +1,10 @@
 # FoundryParser
-Where to get the input text file from
+Where to get the input text file from <br/>
 ![Chat Logs](assets/Save1.png)
-
+<br/>
 When running with python3
 ![Usage](assets/Example1.png)
-
+<br/>
 Parsing [FoundryVTT](https://foundryvtt.com/) chat logs to gather stats about player rolls
 ### :star: Objectives
 1. Take input from Foundry Text Chat log
