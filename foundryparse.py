@@ -1,3 +1,7 @@
+#Written by MossFarmer
+#Message Shubbs#1192 on discord to give me bug reports please, or just make fun of my coding 
+#MAKE SURE YOU ARE USING BETTER ROLLS 5E
+
 f = open("finalfinal.txt","r")
 import  csv
 import itertools
@@ -52,8 +56,8 @@ RollData = {
        
 }
 Abilities = ['Acrobatics',"Animal Handling",'Arcana','Athletics','Deception','History','Insight','Intimidation','Investigation','Medicine','Nature','Perception','Performance','Persuasion','Religion',"Sleight of Hand",'Stealth']
-PCList = ["Zoz","Tilikuss","Mikael","Malus","Alchemical"] 
-BadBoyList = ['Jack','Josh','Will','Zev','Gamemaster']
+CharacterList = ["Zoz","Tilikuss","Mikael","Malus","Alchemical"] 
+PlayerList = ['Jack','Josh','Will','Zev','Gamemaster']
 XD = ['Average Attack Roll','Initiative','Strength Save','Dexterity Save','Constitution Save','Intelligence Save','Wisdom Save','Charisma Save']
 Saves = ['Strength Save','Dexterity Save','Constitution Save','Intelligence Save','Wisdom Save','Charisma Save'] 
 BIGLIST = XD + Abilities
@@ -97,7 +101,7 @@ def handleAbilityCheck(rolltype):
     #b = int(RollData.get(rolltype[3]).get(rolltype[5])[1])
     #print(a)
     #print(b)
-    if name in PCList:
+    if name in CharacterList:
 
         (RollData.get(name).get(skill)[0])+=1
         (RollData.get(name).get(skill)[1])+=int(roll)
@@ -115,7 +119,7 @@ def handleAttackRoll(roll):
     try: # FIX THIS SHIT , IDK IM REALLY TIRED BUT I THINK its better to check legnth then disregard idk
         ind = [i for i,n in enumerate(d) if n == '1d20'][1] #second occurence of 1 d20 
         attackroll = d[ind+1]
-        if name in PCList:
+        if name in CharacterList:
             if weapon not in RollData.get(name).keys():
                 RollData.get(name).update({weapon :[1,int(attackroll)]})
                 weaponList.append(weapon)
@@ -152,9 +156,9 @@ def determineRollType(roll):
     d = roll.split()
     
     #print(d[6])
-    if d[3] in PCList and d[3] not in RollData:
+    if d[3] in CharacterList and d[3] not in RollData:
         RollData.update({d[3]: { 'Initiative' : [0,0],'Average Attack Roll': [0,0],'Strength Save':[0,0],'Dexterity Save':[0,0],'Constitution Save':[0,0],'Intelligence Save':[0,0],'Wisdom Save':[0,0],'Charisma Save':[0,0],'Acrobatics':[0,0],'Animal Handling':[0,0],'Arcana':[0,0],'Athletics':[0,0],'Deception':[0,0],'History':[0,0],'Insight':[0,0],'Intimidation':[0,0],'Investigation':[0,0],'Medicine':[0,0],'Nature':[0,0],'Perception':[0,0],'Performance':[0,0],'Persuasion':[0,0],'Religion':[0,0],'Sleight of Hand':[0,0],'Stealth':[0,0] } })  
-    if d[3] not in PCList and d[3] not in RollData:
+    if d[3] not in CharacterList and d[3] not in RollData:
         RollData.update({d[3]: { 'Initiative' : [0,0],'Average Attack Roll':[0,0],'Saving Throws':[0,0],'Skills':[0,0]}})
         monsterList.append(d[3])
     if d[5] in Abilities:
@@ -168,9 +172,9 @@ def determineRollType(roll):
         handleInitiativeRoll(roll)
     elif 'Save' in roll:
         handleSavingThrow(roll)
-    #if d[3]+" " + d[4] not in PCList: DEBUG EXAMPLE
+    #if d[3]+" " + d[4] not in CharacterList: DEBUG EXAMPLE
         #print(d[3]+" "+d[4])
-    #if d[3] in PCList:
+    #if d[3] in CharacterList:
 def handleSavingThrow(roll):
     d = roll.split()
     name = d[3]
@@ -181,7 +185,7 @@ def handleSavingThrow(roll):
         try:
             ind = [i for i,n in enumerate(d) if n == '1d20'][1] #second occurence of 1 d20 
             save = d[ind+1]
-            if name in PCList:
+            if name in CharacterList:
                 RollData.get(name).get(savetype)[0]+=1
                 RollData.get(name).get(savetype)[1]+=int(save)
            
@@ -195,7 +199,7 @@ def printoutuput(data):
         print(i,sep='')
         print(RollData.get(i))
         print('\n')
-def prepareforcsv(data):
+def prepareforcsv(data): # does nothing right now, might dostuff later
     g = open("prep.txt","a")
 
     for i in RollData.keys():
@@ -209,7 +213,7 @@ def prepareforcsv(data):
 def findchampion(data):
     sums = 0
     occurences = 0
-    for i in PCList:
+    for i in CharacterList:
         sums = 0
         occurences = 0
         for x in RollData.get(i).keys():
@@ -227,19 +231,19 @@ def findchampion(data):
     print("Monsters" + " Total Roll Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
     print()
     print("Average Attack Roll Winners!")
-    for x in PCList:
+    for x in CharacterList:
         if int(RollData.get(x).get('Average Attack Roll')[0]) != 0:
             print(x + " " + "Average Attack Roll" + " " +  str(float(RollData.get(x).get('Average Attack Roll')[1]/float(RollData.get(x).get('Average Attack Roll')[0]))) + "\t\t\t" + str(RollData.get(x).get('Average Attack Roll')[1]) +" Out Of " + str(RollData.get(x).get('Average Attack Roll')[0])+ " Rolls ")
     sums = 0
     occurences = 0
     for x in RollData.keys():
-        if x not in PCList:
+        if x not in CharacterList:
             occurences+=float(RollData.get(x).get('Average Attack Roll')[0])
             sums +=  float(RollData.get(x).get('Average Attack Roll')[1])
     print("Monsters Attack Average " + str(float(sums/occurences)) + "\t\t\t" + str(int(sums)) +" Out Of " +  str(int(occurences)) + " Rolls ")
     print()
     print("Skill Check Awards")
-    for i in PCList:
+    for i in CharacterList:
         sums = 0
         occurences = 0
         for x in Abilities:
@@ -250,14 +254,14 @@ def findchampion(data):
     sums = 0
     occurences =0 
     for i in RollData.keys():
-        if i not in PCList:
+        if i not in CharacterList:
             if int(RollData.get(i).get('Skills')[0]) != 0:
                 occurences+=float(RollData.get(i).get('Skills')[0])
                 sums +=  float(RollData.get(i).get('Skills')[1])
     #print("Monsters " + "Skills " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))  
     print()
     print("Saving Throw Awards")
-    for i in PCList:
+    for i in CharacterList:
         sums = 0
         occurences = 0
         for x in Saves:
@@ -268,7 +272,7 @@ def findchampion(data):
     sums = 0
     occurences = 0
     for i in RollData.keys():
-        if i not in PCList:
+        if i not in CharacterList:
             if int(RollData.get(i).get('Saving Throws')[0]) != 0:
                 occurences+=float(RollData.get(i).get('Saving Throws')[0])
                 sums +=  float(RollData.get(i).get('Saving Throws')[1])
@@ -277,13 +281,13 @@ def findchampion(data):
     print("Initiative Awards")
     sums = 0
     occurences = 0
-    for x in PCList:
+    for x in CharacterList:
         if int(RollData.get(x).get('Initiative')[0]) != 0:
             print(x + " " + "Initiative" + " " +  str(float(RollData.get(x).get('Initiative')[1]/float(RollData.get(x).get('Initiative')[0]))) + "\t\t\t" + str(RollData.get(x).get('Initiative')[1]) +" Out Of " + str(RollData.get(x).get('Initiative')[0])+ " Rolls ")
     sums = 0
     occurences = 0
     for i in RollData.keys():
-        if i not in PCList:
+        if i not in CharacterList:
             if int(RollData.get(i).get('Initiative')[0]) != 0:
                 occurences+=float(RollData.get(i).get('Initiative')[0])
                 sums +=  float(RollData.get(i).get('Initiative')[1])
@@ -292,7 +296,7 @@ def findchampion(data):
     print("Weapon Awards")
     sums = 0
     occurences = 0
-    for i in PCList:
+    for i in CharacterList:
         sums = 0
         occurences = 0
         for x in RollData.get(i).keys():
@@ -301,6 +305,21 @@ def findchampion(data):
         print()
 if __name__ == '__main__':
     #print(b[1599])
+
+    CharacterList = input("Enter Character first names seperated by commas \n Example George,Bob,.. \n")
+    PlayerList= input("Enter Foundry Player Names seperated by commas\n This is used to filter bad inputs \n")
+    PlayerList = PlayerList+',Gamemaster'
+    CharacterList = CharacterList.split(sep = ',')
+    PlayerList = PlayerList.split(sep = ',')
+    print(CharacterList)
+    print(PlayerList)
+    writes = open("results.txt","w")
+    file = open("results.txt","r+")
+    file.truncate(0)
+    
+    #file.write("Results : \n")
+  
+    sys.stdout = writes
     for i in range(0,len(b)):
         #if 'Save' in b[i]:
           #  print(b[i])
@@ -308,7 +327,7 @@ if __name__ == '__main__':
         #print(len(b[30].split()))
         #print((b[30].split()))
         #print(b[52].split())
-        if len(b[i].split()) < 7 or b[i].split()[3] in BadBoyList or '/roll' in b[i]:
+        if len(b[i].split()) < 7 or b[i].split()[3] in PlayerList or '/roll' in b[i]:
             continue
         
         #print(i)
@@ -320,16 +339,17 @@ if __name__ == '__main__':
     #printoutuput(RollData)
     #b = prepareforcsv(RollData)
     #print(RollData.keys())
-    writer.writerow(['Name'])
-    for i in BIGLIST:
+    #writer.writerow(['Name'])
+    #for i in BIGLIST:
 
-        writer.writerow(i)
+        #writer.writerow(i)
     
     #print(len(b[1325].split()))
     #print(monsterList)
     #print(RollData)
     #print(list(b))
     #print(len(b))
-    sys.stdout.close()    
+    
+    sys.stdout.close()  
     
 
