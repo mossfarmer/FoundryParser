@@ -1,5 +1,5 @@
 # FoundryParser
-Where to get the input text file from <br/>
+Where to get the input text file from [FoundryVTT](https://foundryvtt.com/) <br/>
 ![Chat Logs](assets/Save1.png)
 <br/>
 When running with python3
