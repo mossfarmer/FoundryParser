@@ -14,4 +14,7 @@ Parsing [FoundryVTT](https://foundryvtt.com/) chat logs to gather stats about pl
 1. Better Rolls 5e installed, (have not tested without)
 2. Better 5e Rolls using Roll20 roll settings
 
-
+### ✖️ What it does not do
+1. Calculate the unnatural rolls 
+2. Handle damage rolls
+3. Take advantage into account
