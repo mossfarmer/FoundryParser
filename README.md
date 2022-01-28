@@ -5,9 +5,8 @@ Where to get the input text file from [FoundryVTT](https://foundryvtt.com/) <br/
 When running with python3
 ![Usage](assets/Example1.png)
 <br/>
-Parsing [FoundryVTT](https://foundryvtt.com/) chat logs to gather stats about player rolls
 ### :star: Objectives
-1. Take input from Foundry Text Chat log
+1. Parsing [FoundryVTT](https://foundryvtt.com/) chat logs to gather stats about player rolls
 2. Calculating stats for only the natural rolls
 3. Returning results in a readable format
 ### :heavy_check_mark: Conditions
