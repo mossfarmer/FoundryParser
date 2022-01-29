@@ -196,7 +196,7 @@ def printoutuput(data):
         print(i,sep='')
         print(RollData.get(i))
         print('\n')
-def prepareforcsv(data): # does nothing right now, might dostuff later
+def prepareforcsv(data): # does nothing right now, and will likely never do anything
     g = open("prep.txt","a")
 
     for i in RollData.keys():
