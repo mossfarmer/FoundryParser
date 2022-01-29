@@ -213,11 +213,13 @@ def findchampion(data):
     for i in CharacterList:
         sums = 0
         occurences = 0
+        print(i)
         for x in RollData.get(i).keys():
             if int(RollData.get(i).get(x)[0]) != 0 and x not in weaponList: 
                 occurences+=float(RollData.get(i).get(x)[0])
                 sums +=  float(RollData.get(i).get(x)[1])
-        print(i + " Total Roll Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
+        if occurences != 0:
+            print(i + " Total Roll Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
     sums = 0
     occurences = 0
     for i in monsterList:
@@ -225,7 +227,8 @@ def findchampion(data):
             if int(RollData.get(i).get(x)[0]) != 0:
                 occurences+=float(RollData.get(i).get(x)[0])
                 sums +=  float(RollData.get(i).get(x)[1])
-    print("Monsters" + " Total Roll Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
+    if occurences != 0:
+        print("Monsters" + " Total Roll Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
     print()
     print("Average Attack Roll Winners!")
     for x in CharacterList:
@@ -237,7 +240,8 @@ def findchampion(data):
         if x not in CharacterList:
             occurences+=float(RollData.get(x).get('Average Attack Roll')[0])
             sums +=  float(RollData.get(x).get('Average Attack Roll')[1])
-    print("Monsters Attack Average " + str(float(sums/occurences)) + "\t\t\t" + str(int(sums)) +" Out Of " +  str(int(occurences)) + " Rolls ")
+    if occurences != 0:
+        print("Monsters Attack Average " + str(float(sums/occurences)) + "\t\t\t" + str(int(sums)) +" Out Of " +  str(int(occurences)) + " Rolls ")
     print()
     print("Skill Check Awards")
     for i in CharacterList:
@@ -247,14 +251,16 @@ def findchampion(data):
             if int(RollData.get(i).get(x)[0]) != 0:
                 occurences+=float(RollData.get(i).get(x)[0])
                 sums +=  float(RollData.get(i).get(x)[1])
-        print(i + " Skill Check Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
-    sums = 0
-    occurences =0 
-    for i in RollData.keys():
-        if i not in CharacterList:
-            if int(RollData.get(i).get('Skills')[0]) != 0:
-                occurences+=float(RollData.get(i).get('Skills')[0])
-                sums +=  float(RollData.get(i).get('Skills')[1])
+        if occurences != 0:
+            print(i + " Skill Check Average " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
+    #Monster Skills by default commented out
+    #sums = 0
+    #occurences =0 
+    #for i in RollData.keys():
+        #if i not in CharacterList:
+            #if int(RollData.get(i).get('Skills')[0]) != 0:
+                #occurences+=float(RollData.get(i).get('Skills')[0])
+                #sums +=  float(RollData.get(i).get('Skills')[1])
     #print("Monsters " + "Skills " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))  
     print()
     print("Saving Throw Awards")
@@ -265,7 +271,8 @@ def findchampion(data):
             if int(RollData.get(i).get(x)[0]) != 0:
                 occurences+=float(RollData.get(i).get(x)[0])
                 sums +=  float(RollData.get(i).get(x)[1])
-        print(i + " Average Saving Throw " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
+        if occurences != 0:
+            print(i + " Average Saving Throw " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))
     sums = 0
     occurences = 0
     for i in RollData.keys():
@@ -273,7 +280,8 @@ def findchampion(data):
             if int(RollData.get(i).get('Saving Throws')[0]) != 0:
                 occurences+=float(RollData.get(i).get('Saving Throws')[0])
                 sums +=  float(RollData.get(i).get('Saving Throws')[1])
-    print("Monsters " + "Saves " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))       
+    if occurences != 0:
+        print("Monsters " + "Saves " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))       
     print()
     print("Initiative Awards")
     sums = 0
@@ -288,7 +296,8 @@ def findchampion(data):
             if int(RollData.get(i).get('Initiative')[0]) != 0:
                 occurences+=float(RollData.get(i).get('Initiative')[0])
                 sums +=  float(RollData.get(i).get('Initiative')[1])
-    print("Monsters " + " Initiative " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))             
+    if occurences != 0:
+        print("Monsters " + " Initiative " + str(float(sums/occurences)) + " " + str(int(sums)) + " out of " + str(int(occurences)))             
     print()
     print("Weapon Awards")
     sums = 0
@@ -332,9 +341,9 @@ if __name__ == '__main__':
         if len(b[i].split()) < 7 or b[i].split()[3] in PlayerList or '/roll' in b[i]:
             continue
         
-        #print(i)
+        print(i)
         #print(b[1727])
-        #print(b[i])
+        print(b[i])
         determineRollType(b[i])
     findchampion(RollData)
 
